@@ -6,7 +6,7 @@ from scheduler import *
 
 st.set_page_config(page_title="CPU Scheduler Simulator", layout="wide")
 
-st.title("⏱️ Interactive CPU Scheduler Simulator")
+st.title("⏱️ Intelligent CPU Scheduler Simulator")
 st.markdown("<h3>Explore different CPU scheduling algorithms and their performance metrics📈</h3>", unsafe_allow_html=True)
 
 # Initialize session state
@@ -62,7 +62,7 @@ col1, col2 = st.columns(2)
 with col1:
     algorithm = st.selectbox(
         "Algorithm",
-        ["FCFS", "SJF (Non-preemptive)", "SJF (Preemptive)", "Round Robin", "Priority"]
+        ["FCFS", "SJF (Non-preemptive)", "SRTF (Preemptive)", "Round Robin", "Priority"]
     )
 
 with col2:
