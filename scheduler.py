@@ -135,6 +135,54 @@ def round_robin_scheduling(processes: List[Process], time_quantum: int) -> Tuple
 
     return completed, gantt_data, context_switches - 1
 
-def priority_scheduling(processes: List[Process]) -> Tuple[List[Process], List[tuple], int]:
-    processes = sorted(processes, key=lambda x: (x.priority, x.arrival))
-    return fcfs_scheduling(processes)
+def priority_scheduling(processes: List[Process], ascending: bool = True) -> Tuple[List[Process], List[tuple], int]:
+    """
+    Implements Preemptive Priority Scheduling.
+    The user specifies whether lower numbers indicate higher priority (ascending=True) or vice versa.
+    """
+    # Define sorting order based on user input
+    priority_sort_order = (lambda p: p.priority) if ascending else (lambda p: -p.priority)
+
+    # Sort processes by arrival time first
+    processes = sorted(processes, key=lambda x: x.arrival)
+    
+    time = 0
+    gantt_chart = []
+    completed = []
+    ready_queue = []
+    remaining_burst = {p.pid: p.burst for p in processes}
+    context_switches = 0
+    last_pid = None  # Track the last executed process
+
+    while len(completed) < len(processes):
+        # Add processes that have arrived to the queue
+        for p in processes:
+            if p.arrival <= time and p not in ready_queue and p.pid not in [c.pid for c in completed]:
+                ready_queue.append(p)
+
+        if ready_queue:
+            # Sort queue based on user-defined priority order
+            ready_queue.sort(key=priority_sort_order)
+            current_process = ready_queue[0]
+
+            # If a different process is executed, increase context switch count
+            if last_pid is not None and last_pid != current_process.pid:
+                context_switches += 1
+
+            # Run process for 1 unit time (preemptive execution)
+            gantt_chart.append((current_process.pid, time, time + 1))
+            remaining_burst[current_process.pid] -= 1
+            last_pid = current_process.pid
+            time += 1
+
+            # If process is completed, update its metrics
+            if remaining_burst[current_process.pid] == 0:
+                current_process.completion_time = time
+                current_process.turnaround_time = current_process.completion_time - current_process.arrival
+                current_process.waiting_time = current_process.turnaround_time - current_process.burst
+                completed.append(current_process)
+                ready_queue.remove(current_process)
+        else:
+            time += 1  # If no process is ready, move forward in time
+
+    return completed, gantt_chart, context_switches
