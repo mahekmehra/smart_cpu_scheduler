@@ -66,6 +66,11 @@ with col1:
     )
 
 with col2:
+    if algorithm == "Priority":
+        priority_order = st.radio("Priority Order", ["Lower number = Higher Priority", "Higher number = Higher Priority"])
+
+
+with col2:
     if algorithm == "Round Robin":
         time_quantum = st.number_input("Time Quantum", min_value=1, value=2)
 
@@ -84,7 +89,7 @@ if st.session_state.processes and st.button("Run Simulation"):
         elif algorithm == "Round Robin":
             processes, gantt_data, switches = round_robin_scheduling(st.session_state.processes, time_quantum)
         else:  # Priority
-            processes, gantt_data, switches = priority_scheduling(st.session_state.processes)
+            processes, gantt_data, switches = priority_scheduling(st.session_state.processes,ascending=(priority_order == "Lower number = Higher Priority")) 
 
         # Calculate metrics
         avg_turnaround, avg_waiting, avg_response = calculate_metrics(processes)
