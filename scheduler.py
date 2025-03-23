@@ -165,6 +165,10 @@ def priority_scheduling(processes: List[Process], ascending: bool = True) -> Tup
             ready_queue.sort(key=priority_sort_order)
             current_process = ready_queue[0]
 
+            # Record response time when the process starts for the first time
+            if current_process.response_time == -1:
+                current_process.response_time = time - current_process.arrival
+
             # If a different process is executed, increase context switch count
             if last_pid is not None and last_pid != current_process.pid:
                 context_switches += 1
