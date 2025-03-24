@@ -94,13 +94,28 @@ def sjf_scheduling(processes: List[Process], preemptive: bool = False) -> Tuple[
 
     return completed, gantt_data, context_switches - 1
 
+from typing import List, Tuple
+
+class Process:
+    def __init__(self, pid, arrival, burst, priority=0):
+        self.pid = pid
+        self.arrival = arrival
+        self.burst = burst
+        self.remaining_burst = burst
+        self.priority = priority
+        self.response_time = -1
+        self.completion_time = 0
+        self.turnaround_time = 0
+        self.waiting_time = 0
+
 def round_robin_scheduling(processes: List[Process], time_quantum: int) -> Tuple[List[Process], List[tuple], int]:
-    processes = [Process(p.pid, p.arrival, p.burst, p.priority) for p in processes]
+    processes = sorted([Process(p.pid, p.arrival, p.burst, p.priority) for p in processes], key=lambda p: p.arrival)
     current_time = 0
     completed = []
     gantt_data = []
-    context_switches = 0
     queue = []
+    last_executed_pid = None  # Track last executed process
+    context_switches = 0
 
     while processes or queue:
         while processes and processes[0].arrival <= current_time:
@@ -115,17 +130,19 @@ def round_robin_scheduling(processes: List[Process], time_quantum: int) -> Tuple
         if process.response_time == -1:
             process.response_time = current_time - process.arrival
 
-        execution_time = min(time_quantum, process.remaining_burst or 0)
-        if process.remaining_burst:
-            process.remaining_burst -= execution_time
+        execution_time = min(time_quantum, process.remaining_burst)
+        process.remaining_burst -= execution_time
         gantt_data.append((process.pid, current_time, current_time + execution_time))
         current_time += execution_time
-        context_switches += 1
+
+        if last_executed_pid is not None and last_executed_pid != process.pid:
+            context_switches += 1
+        last_executed_pid = process.pid
 
         while processes and processes[0].arrival <= current_time:
             queue.append(processes.pop(0))
 
-        if process.remaining_burst and process.remaining_burst > 0:
+        if process.remaining_burst > 0:
             queue.append(process)
         else:
             process.completion_time = current_time
@@ -133,7 +150,8 @@ def round_robin_scheduling(processes: List[Process], time_quantum: int) -> Tuple
             process.waiting_time = process.turnaround_time - process.burst
             completed.append(process)
 
-    return completed, gantt_data, context_switches - 1
+    return completed, gantt_data, context_switches
+
 
 def priority_scheduling(processes: List[Process], ascending: bool = True) -> Tuple[List[Process], List[tuple], int]:
     """
