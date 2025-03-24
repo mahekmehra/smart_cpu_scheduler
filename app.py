@@ -62,7 +62,7 @@ col1, col2 = st.columns(2)
 with col1:
     algorithm = st.selectbox(
         "Algorithm",
-        ["FCFS", "SJF (Non-preemptive)", "SRTF (Preemptive)", "Round Robin", "Priority"]
+        ["FCFS", "SJF (Non-preemptive)", "SJF (Preemptive)", "Round Robin", "Priority"]
     )
 
 with col2:
