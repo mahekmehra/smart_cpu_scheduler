@@ -1,16 +1,86 @@
-INTELLIGENT CPU SCHEDULER SIMULATOR 
+⏱️ SMART CPU SCHEDULER SIMULATOR
 
-Project Overview
+Overview :-
 
-This project is a simulator for CPU scheduling algorithms including First Come First Serve (FCFS), Shortest Job First (SJF), Round Robin (RR), and Priority Scheduling. The simulator provides real-time visualization through Gantt charts and calculates key performance metrics like average waiting time and turnaround time.
+SMART CPU Scheduler Simulator is a real-time, interactive web-based application that simulates various CPU scheduling algorithms. Built using Streamlit and Plotly, this tool allows users to visualize scheduling processes dynamically and analyze performance metrics.
 
-Features
+Features :-
 
-✅ Supports FCFS, SJF, Round Robin, and Priority Scheduling
+Supports Multiple Scheduling Algorithms:
 
-✅ Gantt Chart Visualization for process execution
+First Come First Serve (FCFS)
 
-✅ Displays Average Waiting Time & Turnaround Time
+Shortest Job First (SJF) - Non-preemptive
 
-✅ User Input Support for processes with arrival time, burst time, and priority
+Shortest Remaining Time First (SRTF) - Preemptive
+
+Round Robin (RR)
+
+Priority Scheduling (Ascending/Descending)
+
+User-Friendly Input System:
+
+Add, delete, and modify process details
+
+Customize priority and time quantum for respective algorithms
+
+Dynamic Visualization:
+
+Gantt Chart for process execution order
+
+Process Table to track execution metrics
+
+Time Distribution Analysis
+
+Performance Metrics (TAT, WT, RT, Context Switches)
+
+Modern UI/UX:
+
+Responsive design with a dark theme
+
+Streamlined process interaction
+
+Large fonts and aligned UI elements for better readability
+
+Tech Stack :-
+
+Frontend & Backend: Streamlit
+
+Data Handling: Pandas
+
+Visualization: Plotly
+
+Programming Language: Python 3
+
+Usage
+
+Add Processes: Enter Process ID, Arrival Time, Burst Time, and Priority.
+
+Select Scheduling Algorithm: Choose one of the five available options.
+
+Set Parameters:
+
+Priority Scheduling: Choose ascending or descending order.
+
+Round Robin: Set time quantum.
+
+Run Simulation: Click the Run Simulation button to visualize execution.
+
+Analyze Results:
+
+View the Gantt Chart for execution order.
+
+Study Process Details Table for TAT, WT, and RT.
+
+Analyze Performance Metrics.
+
+Performance Metrics Explained :-
+
+Turnaround Time (TAT) = Completion Time - Arrival Time
+
+Waiting Time (WT) = TAT - Burst Time
+
+Response Time (RT) = First CPU Allocation - Arrival Time
+
+Context Switches = Number of times CPU switches between processes
 
