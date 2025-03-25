@@ -62,7 +62,7 @@ col1, col2 = st.columns(2)
 with col1:
     algorithm = st.selectbox(
         "Algorithm",
-        ["FCFS", "SJF (Non-preemptive)", "SJF (Preemptive)", "Round Robin", "Priority"]
+        ["FCFS", "SJF (Non-preemptive)", "SRTF (Preemptive)", "Round Robin", "Priority"]
     )
 
 with col2:
@@ -84,7 +84,7 @@ if st.session_state.processes and st.button("Run Simulation"):
             processes, gantt_data, switches = fcfs_scheduling(st.session_state.processes)
         elif algorithm == "SJF (Non-preemptive)":
             processes, gantt_data, switches = sjf_scheduling(st.session_state.processes, preemptive=False)
-        elif algorithm == "SJF (Preemptive)":
+        elif algorithm == "SRTF (Preemptive)":
             processes, gantt_data, switches = sjf_scheduling(st.session_state.processes, preemptive=True)
         elif algorithm == "Round Robin":
             processes, gantt_data, switches = round_robin_scheduling(st.session_state.processes, time_quantum)
