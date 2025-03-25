@@ -173,7 +173,7 @@ if st.session_state.processes and st.button("Run Simulation", use_container_widt
                 "Response Time": p.response_time
             } for p in processes
         ])
-        st.dataframe(details_df)
+        st.dataframe(details_df,use_container_width=True)
 
         # Time Distribution and Time Metrics Visualization
         st.subheader("Process Time Analysis")
