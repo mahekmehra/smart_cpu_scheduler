@@ -6,32 +6,32 @@ SMART CPU Scheduler Simulator is a real-time, interactive web-based application 
 
 Features :-
 
-  -> Supports Multiple Scheduling Algorithms:
+Supports Multiple Scheduling Algorithms: 
   -> First Come First Serve (FCFS)
   -> Shortest Job First (SJF) - Non-preemptive
   -> Shortest Remaining Time First (SRTF) - Preemptive
   -> Round Robin (RR)
   -> Priority Scheduling (Ascending/Descending)
 
-User-Friendly Input System :-
+User-Friendly Input System :
 
   -> Add, delete, and modify process details
   -> Customize priority and time quantum for respective algorithms
 
-Dynamic Visualization :-
+Dynamic Visualization :
 
   -> Gantt Chart for process execution order
   -> Process Table to track execution metrics
   -> Time Distribution Analysis
   -> Performance Metrics (TAT, WT, RT, Context Switches)
 
-Modern UI/UX :-
+Modern UI/UX :
 
   -> Responsive design with a dark theme
   -> Streamlined process interaction
   -> User friendly view and aligned UI elements for better readability
 
-Tech Stack :-
+Tech Stack :
 
   -> Frontend & Backend: Streamlit
   -> Data Handling: Pandas
