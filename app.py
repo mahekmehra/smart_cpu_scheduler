@@ -16,7 +16,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("⏱️ SMART CPU SIMULATOR ")
-st.markdown("<h3 style='text-align: center;'>Explore different CPU scheduling algorithms and their performance metrics📈</h3>", unsafe_allow_html=True)
+st.markdown("<h3>Explore different CPU scheduling algorithms and their performance metrics📈</h3>", unsafe_allow_html=True)
 
 # Initialize session state
 if 'processes' not in st.session_state:
