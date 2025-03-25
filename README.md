@@ -6,81 +6,55 @@ SMART CPU Scheduler Simulator is a real-time, interactive web-based application 
 
 Features :-
 
-Supports Multiple Scheduling Algorithms:
+  -> Supports Multiple Scheduling Algorithms:
+  -> First Come First Serve (FCFS)
+  -> Shortest Job First (SJF) - Non-preemptive
+  -> Shortest Remaining Time First (SRTF) - Preemptive
+  -> Round Robin (RR)
+  -> Priority Scheduling (Ascending/Descending)
 
-First Come First Serve (FCFS)
+User-Friendly Input System :-
 
-Shortest Job First (SJF) - Non-preemptive
+  -> Add, delete, and modify process details
+  -> Customize priority and time quantum for respective algorithms
 
-Shortest Remaining Time First (SRTF) - Preemptive
+Dynamic Visualization :-
 
-Round Robin (RR)
+  -> Gantt Chart for process execution order
+  -> Process Table to track execution metrics
+  -> Time Distribution Analysis
+  -> Performance Metrics (TAT, WT, RT, Context Switches)
 
-Priority Scheduling (Ascending/Descending)
+Modern UI/UX :-
 
-User-Friendly Input System:
-
-Add, delete, and modify process details
-
-Customize priority and time quantum for respective algorithms
-
-Dynamic Visualization:
-
-Gantt Chart for process execution order
-
-Process Table to track execution metrics
-
-Time Distribution Analysis
-
-Performance Metrics (TAT, WT, RT, Context Switches)
-
-Modern UI/UX:
-
-Responsive design with a dark theme
-
-Streamlined process interaction
-
-Large fonts and aligned UI elements for better readability
+  -> Responsive design with a dark theme
+  -> Streamlined process interaction
+  -> User friendly view and aligned UI elements for better readability
 
 Tech Stack :-
 
-Frontend & Backend: Streamlit
+  -> Frontend & Backend: Streamlit
+  -> Data Handling: Pandas
+  -> Visualization: Plotly
+  -> Programming Language: Python 3
 
-Data Handling: Pandas
+Usage :-
 
-Visualization: Plotly
-
-Programming Language: Python 3
-
-Usage
-
-Add Processes: Enter Process ID, Arrival Time, Burst Time, and Priority.
-
-Select Scheduling Algorithm: Choose one of the five available options.
-
-Set Parameters:
-
-Priority Scheduling: Choose ascending or descending order.
-
-Round Robin: Set time quantum.
-
-Run Simulation: Click the Run Simulation button to visualize execution.
-
-Analyze Results:
-
-View the Gantt Chart for execution order.
-
-Study Process Details Table for TAT, WT, and RT.
-
-Analyze Performance Metrics.
+1> Add Processes: Enter Process ID, Arrival Time, Burst Time, and Priority.
+2> Select Scheduling Algorithm: Choose one of the five available options.
+3> Set Parameters:
+   -> Priority Scheduling: Choose ascending or descending order.
+   -> Round Robin: Set time quantum.
+4> Run Simulation: Click the Run Simulation button to visualize execution.
+5> Analyze Results:
+   -> View the Gantt Chart for execution order.
+   -> Study Process Details Table for TAT, WT, and RT.
+6> Analyze Performance Metrics.
 
 Performance Metrics Explained :-
 
-Turnaround Time (TAT) = Completion Time - Arrival Time
-
-Waiting Time (WT) = TAT - Burst Time
-
-Response Time (RT) = First CPU Allocation - Arrival Time
-
-Context Switches = Number of times CPU switches between processes
+  -> Turnaround Time (TAT) = Completion Time - Arrival Time
+  -> Waiting Time (WT) = TAT - Burst Time
+  -> Response Time (RT) = First CPU Allocation - Arrival Time
+  -> Context Switches = Number of times CPU switches between processes
 
