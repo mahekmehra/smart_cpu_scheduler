@@ -91,7 +91,7 @@ if st.session_state.processes and st.button("Run Simulation", use_container_widt
             processes, gantt_data, switches = fcfs_scheduling(st.session_state.processes)
         elif algorithm == "SJF (Non-preemptive)":
             processes, gantt_data, switches = sjf_scheduling(st.session_state.processes, preemptive=False)
-        elif algorithm == "SJF (Preemptive)":
+        elif algorithm == "SRTF (Preemptive)":
             processes, gantt_data, switches = sjf_scheduling(st.session_state.processes, preemptive=True)
         elif algorithm == "Round Robin":
             processes, gantt_data, switches = round_robin_scheduling(st.session_state.processes, time_quantum)
