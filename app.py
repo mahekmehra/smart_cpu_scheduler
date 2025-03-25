@@ -6,8 +6,17 @@ from scheduler import *
 
 st.set_page_config(page_title="CPU Scheduler Simulator", layout="wide")
 
-st.title("⏱️ Intelligent CPU Scheduler Simulator")
-st.markdown("<h3>Explore different CPU scheduling algorithms and their performance metrics📈</h3>", unsafe_allow_html=True)
+st.markdown("""
+    <style>
+        h1 { font-size: 50px !important; }
+        h3 { font-size: 26px !important; }
+        .metric-container { font-size: 22px !important; }
+        .stDataFrame { font-size: 18px !important; }
+    </style>
+""", unsafe_allow_html=True)
+
+st.title("⏱️ SMART CPU SIMULATOR ")
+st.markdown("<h3 style='text-align: center;'>Explore different CPU scheduling algorithms and their performance metrics📈</h3>", unsafe_allow_html=True)
 
 # Initialize session state
 if 'processes' not in st.session_state:
@@ -26,7 +35,7 @@ with st.expander("Add New Process", expanded=True):
     with col4:
         priority = st.number_input("Priority", min_value=0, value=0)
 
-    if st.button("Add Process"):
+    if st.button("Add Process", use_container_width=True):
         new_process = Process(pid, arrival, burst, priority)
         st.session_state.processes.append(new_process)
         st.success(f"Process {pid} added successfully!")
@@ -34,24 +43,24 @@ with st.expander("Add New Process", expanded=True):
 # Display Process Table
 if st.session_state.processes:
     st.subheader("Process Table")
-    process_df = pd.DataFrame([
+    process_df = pd.DataFrame(sorted([
         {
             "PID": p.pid,
             "Arrival Time": p.arrival,
             "Burst Time": p.burst,
             "Priority": p.priority
         } for p in st.session_state.processes
-    ])
-    st.dataframe(process_df)
+    ], key=lambda x: x["PID"], reverse=False))
+    st.dataframe(process_df,use_container_width=True)
 
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns(2)
     with col1:
-        if st.button("Clear All Processes"):
+        if st.button("Clear All Processes", use_container_width=True):
             st.session_state.processes = []
             st.rerun()
     with col2:
         delete_pid = st.selectbox("Select Process to Delete", [p.pid for p in st.session_state.processes])
-        if st.button("Delete Selected Process"):
+        if st.button("Delete Selected Process", use_container_width=True):
             st.session_state.processes = [p for p in st.session_state.processes if p.pid != delete_pid]
             st.rerun()
             
@@ -66,11 +75,14 @@ with col1:
     )
 
 with col2:
+    if algorithm == "Priority":
+        priority_order = st.radio("Priority Order", ["Lower number = Higher Priority", "Higher number = Higher Priority"])
+
     if algorithm == "Round Robin":
         time_quantum = st.number_input("Time Quantum", min_value=1, value=2)
 
 # Run Simulation
-if st.session_state.processes and st.button("Run Simulation"):
+if st.session_state.processes and st.button("Run Simulation", use_container_width=True):
     if not st.session_state.processes:
         st.error("Please add processes first!")
     else:
@@ -84,10 +96,13 @@ if st.session_state.processes and st.button("Run Simulation"):
         elif algorithm == "Round Robin":
             processes, gantt_data, switches = round_robin_scheduling(st.session_state.processes, time_quantum)
         else:  # Priority
-            processes, gantt_data, switches = priority_scheduling(st.session_state.processes)
+            processes, gantt_data, switches = priority_scheduling(st.session_state.processes, ascending=(priority_order == "Lower number = Higher Priority"))
+
 
         # Calculate metrics
         avg_turnaround, avg_waiting, avg_response = calculate_metrics(processes)
+
+        processes.sort(key=lambda p: p.pid)
 
         # Display Gantt Chart
         st.subheader("Gantt Chart")
