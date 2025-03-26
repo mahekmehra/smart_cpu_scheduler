@@ -52,47 +52,58 @@ def sjf_scheduling(processes: List[Process], preemptive: bool = False) -> Tuple[
     completed = []
     gantt_data = []
     context_switches = 0
+    last_pid = None  # Track the last executed process
 
     while processes:
         available = [p for p in processes if p.arrival <= current_time]
 
         if not available:
             current_time = min(p.arrival for p in processes)
+            last_pid = None  # No process running, reset last executed process
             continue
 
         if preemptive:
             process = min(available, key=lambda x: x.remaining_burst or float('inf'))
+            
             if process.response_time == -1:
                 process.response_time = current_time - process.arrival
-
+            
             execution_time = 1
-            if process.remaining_burst:
-                process.remaining_burst -= execution_time
+            process.remaining_burst -= execution_time
             gantt_data.append((process.pid, current_time, current_time + execution_time))
+            
+            if last_pid is not None and last_pid != process.pid:
+                context_switches += 1  # Count context switch when switching processes
+            
+            last_pid = process.pid  # Update last executed process
             current_time += execution_time
-
+            
             if process.remaining_burst == 0:
                 process.completion_time = current_time
                 process.turnaround_time = process.completion_time - process.arrival
                 process.waiting_time = process.turnaround_time - process.burst
                 completed.append(process)
                 processes.remove(process)
-                context_switches += 1
         else:
             process = min(available, key=lambda x: x.burst)
+            
             if process.response_time == -1:
                 process.response_time = current_time - process.arrival
-
+            
             process.completion_time = current_time + process.burst
             process.turnaround_time = process.completion_time - process.arrival
             process.waiting_time = process.turnaround_time - process.burst
             gantt_data.append((process.pid, current_time, process.completion_time))
+            
+            if last_pid is not None and last_pid != process.pid:
+                context_switches += 1  # Count context switch when switching processes
+            
+            last_pid = process.pid  # Update last executed process
             current_time = process.completion_time
             completed.append(process)
             processes.remove(process)
-            context_switches += 1
-
-    return completed, gantt_data, context_switches - 1
+    
+    return completed, gantt_data, context_switches
 
 from typing import List, Tuple
 
